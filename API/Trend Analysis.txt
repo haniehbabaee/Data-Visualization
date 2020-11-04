@@ -1,0 +1,5 @@
+
+Trend Analysis:
+1.The Latitude v s. Temperature plot shows that temperature rises to maximum near “0” Latitude and decrease when it goes further (minus and plus), and it means that temperature is higher for the cities near Equator!
+2.There is not a correlation between Latitude and Humidity, but there is a city near equator that has the maximum humidity around 300!
+3.There is not a correlation between cloudiness and latitude as well!
