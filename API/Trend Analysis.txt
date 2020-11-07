@@ -1,5 +1,5 @@
 
 Trend Analysis:
-1.The Latitude v s. Temperature plot shows that temperature rises to maximum near “0” Latitude and decrease when it goes further (minus and plus), and it means that temperature is higher for the cities near Equator!
-2.There is not a correlation between Latitude and Humidity, but there is a city near equator that has the maximum humidity around 300!
-3.There is not a correlation between cloudiness and latitude as well!
+1.The Northern Hemisphere Temperature vs Latitude shows that temperature rises to maximum near “0” Latitude and decrease when it goes further to the north pole and it means that temperature is higher for the cities near Equator!and slope of teh regress value justify that (slope is almost -1)and the r-value is 0.7.
+2.There is not a correlation between Latitude and Humidity in both hemisphere and the r-value is around 0.01 in northern hemisphere which shows that there is no correlation between latitude and humidity.
+3.There is not a correlation between cloudiness and latitude as well and the R-value in northern hemisphere is around 0.02.
