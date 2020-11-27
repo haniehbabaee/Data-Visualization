@@ -5,9 +5,9 @@ INNER JOIN salaries AS s
 ON e.emp_no= s.emp_no;
 
 --2.List first name, last name, and hire date for employees who were hired in 1986.
-SELECT first_name, last_name, hire_date
+SELECT first_name, last_name, to_date(hire_date,'MM/DD/YYYY') 
 FROM employees
-WHERE hire_date like '%1986' ;
+where date_part('year',to_date(hire_date,'MM/DD/YYYY') ) = 1986 ;
 
 --3.List the manager of each department with the following information:
 --department number, department name, the manager's employee number, last name, first name.
