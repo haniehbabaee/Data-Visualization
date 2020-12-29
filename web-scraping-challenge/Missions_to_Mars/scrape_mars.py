@@ -7,8 +7,7 @@
 import pandas as pd
 from bs4 import BeautifulSoup as bs
 import splinter
-import requests
-import json
+
 import pymongo
 from splinter import Browser
 import time
@@ -135,7 +134,7 @@ def scrape_all():
 # In[116]:
 
 
-    planet_facts_table_html = mars_df.to_html()
+    planet_facts_table_html = mars_df.to_html(classes="table table-striped")
     
 
 
@@ -171,15 +170,8 @@ def scrape_all():
         browser.back()
 
 
-# In[107]:
-
-  
-    
-  
-
-
 # In[122]:
-
+ 
 
     mars_data={'news_title': news_title,
         'news_p': news_p,
