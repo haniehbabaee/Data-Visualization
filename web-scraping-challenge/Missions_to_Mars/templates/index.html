@@ -45,35 +45,18 @@
     </div> 
     <div class="container border">
     <div class="row">
-      <div class="col-sm-6 border">
-        <img src="{{data.hemisphere_image_urls[0]['img_url']}}" class="card-img-top" alt="...">
+      
+  
+        {% for hemisphere in data.hemisphere_image_urls %}
+        <div class="col-sm-6 border">
+        <img src= "{{ hemisphere['img_url'] }}"  class="card-img-top" ,alt="ZZZ">
           <div class="card-body text-center">
-            <h3 class="card-title"><strong>{{data.hemisphere_image_urls[0]['title']}}</strong></h3>
+            <h3 class="card-title"><strong>{{hemisphere['title']}}</strong></h3>
           </div>
-      </div>
-      <div class="col-sm-6 border">
-        <img src="{{data.hemisphere_image_urls[1]['img_url']}}" class="card-img-top" alt="...">
-          <div class="card-body text-center">
-            <h3 class="card-title"><strong>{{data.hemisphere_image_urls[1]['title']}}</strong></h3>
-          </div>
-      </div>
-    </div>
-    <br>
-    <br>
-    <div class="row">
-      <div class="col-sm-6 border" id="padding">
-        <img src="{{data.hemisphere_image_urls[2]['img_url']}}" class="card-img-top" alt="...">
-          <div class="card-body text-center">
-            <h3 class="card-title"><strong>{{data.hemisphere_image_urls[2]['title']}}</strong></h3>
-          </div>
-      </div>
-      <div class="col-sm-6 border">
-        <img src="{{data.hemisphere_image_urls[3]['img_url']}}" class="card-img-top" alt="...">
-          <div class="card-body text-center">
-            <h3 class="card-title"><strong>{{data.hemisphere_image_urls[3]['title']}}</strong></h3>
-          </div>
-      </div>
-    </div>
+        </div>
+          {% endfor %}
+      
+
 
   </div>
       
@@ -85,3 +68,4 @@
 </body>
 
 </html>
+      

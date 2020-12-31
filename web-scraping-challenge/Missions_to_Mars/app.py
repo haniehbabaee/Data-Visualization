@@ -12,7 +12,14 @@ mongo=PyMongo(app, uri='mongodb://localhost:27017/mars_db')
 @app.route("/")
 def home():
     new_data=mongo.db.mars.find_one()
+    
+    print(new_data)
+    # if new_data:
+    #     return render_template("index.html", data=new_data)
+    # else:
+    #     return render_template("default.html")
     return render_template("index.html", data=new_data)
+
 
 @app.route("/scrape")
 def scrape():
