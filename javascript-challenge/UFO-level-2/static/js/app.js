@@ -19,7 +19,8 @@ form.on('change',runEnter)
 
 function runEnter() {
     d3.event.preventDefault();
-   
+    //var inputText= d3.select.text();
+
     var inputID = d3.select(this).attr('id')
     console.log(inputID)
     var inputValue = d3.select(this).property('value')
@@ -33,6 +34,7 @@ function runEnter() {
     }
     else if (inputID ==="state"){
         var filteredData = tableData.filter(record => record.state ===inputValue);
+        d3.select
     }
     else if (inputID ==="country"){
         var filteredData = tableData.filter(record => record.country ===inputValue);
@@ -41,6 +43,7 @@ function runEnter() {
         var filteredData = tableData.filter(record => record.shape ===inputValue);
     }
     tbody.html(" ");
+    d3.select(this).property('value', " ");
     
     filteredData.forEach((dataRow) => {
         var row = tbody.append("tr");
@@ -49,4 +52,5 @@ function runEnter() {
             cell.text(value)
         })
     });
+    //document.getElementByClass("list-group-item").reset(); 
 };
