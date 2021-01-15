@@ -1,7 +1,10 @@
+// Assign the data from `data.js` to a descriptive variable
 var tableData = data;
+
+//select the body
 var tbody = d3.select("tbody");
 
-
+//load the initial data
 tableData.forEach(function(record) {
     var row = tbody.append("tr");
     Object.entries(record).forEach(function([key, value]){
@@ -9,18 +12,22 @@ tableData.forEach(function(record) {
         cell.text(value);
     });
 });
-
-//var button = d3.selectAll("#filter-btn");
+// Select the form
 var form = d3.selectAll(".form-control");
 
+// Create event handlers
 form.on('change',runEnter)
 
+// Complete the event handler function for the form
 function runEnter() {
+    // Prevent the page from refreshing
     d3.event.preventDefault();
    
-
+    //select the input ID
     var inputID = d3.select(this).attr('id')
     console.log(inputID)
+
+    //select input value
     var inputValue = d3.select(this).property('value')
     console.log(inputValue)
   
@@ -40,9 +47,13 @@ function runEnter() {
     else {
         var filteredData = tableData.filter(record => record.shape ===inputValue);
     }
+    // remove any data from the list 
     tbody.html(" ");
+
+    //clear the search field
     d3.select(this).property('value', "");
     
+    //append filtered data to the row of the table
     filteredData.forEach((dataRow) => {
         var row = tbody.append("tr");
         Object.entries(dataRow).forEach(function([key,value]){
