@@ -19,7 +19,7 @@ var queryUrl="https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week
 d3.json(queryUrl, function(data){
   console.log(data)
   data.features.forEach(function(record){
-    var marker= L.circle([record.geometry.coordinates[1], record.geometry.coordinates[0]], {
+    L.circle([record.geometry.coordinates[1], record.geometry.coordinates[0]], {
       color:"black",
       fillColor: chooseColor(record.geometry.coordinates[2]),
       fillOpacity: 0.75,
@@ -50,30 +50,22 @@ function chooseColor(depth) {
   }
 }
 
-  // Set up the legend
-  var legend = L.control({ position: "bottomright" });
-  legend.onAdd = function(myMap) {
-    var div = L.DomUtil.create("div", "info legend");
-    var limits = marker.options.limits;
-    var colors = marker.options.colors;
-    var labels = [];
+var legend = L.control({position: 'bottomright'});
 
-    // Add min & max
-    var legendInfo = "<h1>Median Income</h1>" +
-      "<div class=\"labels\">" +
-        "<div class=\"min\">" + limits[0] + "</div>" +
-        "<div class=\"max\">" + limits[limits.length - 1] + "</div>" +
-      "</div>";
+legend.onAdd = function (map) {
 
-    div.innerHTML = legendInfo;
+    var div = L.DomUtil.create('div', 'info legend'),
+        grades = [-10, 10, 30, 50, 70, 90],
+        labels = [];
 
-    limits.forEach(function(limit, index) {
-      labels.push("<li style=\"background-color: " + colors[index] + "\"></li>");
-    });
+    // loop through our density intervals and generate a label with a colored square for each interval
+    for (var i = 0; i < grades.length; i++) {
+        div.innerHTML +=
+            '<i style="background:' + chooseColor(grades[i] + 1) + '"></i> ' +
+            grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+    }
 
-    div.innerHTML += "<ul>" + labels.join("") + "</ul>";
     return div;
-  }
+};
 
-  // Adding legend to the map
-  legend.addTo(myMap);
+legend.addTo(myMap);
