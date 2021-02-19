@@ -45,14 +45,11 @@ function chooseColor(depth) {
   else if (depth<=90){
     return "#BD0026"
   }
-  else if (depth>90){
-    return "#800026"
-  }
 }
 
 var legend = L.control({position: 'bottomright'});
 
-legend.onAdd = function (map) {
+legend.onAdd = function (myMap) {
 
     var div = L.DomUtil.create('div', 'info legend'),
         grades = [-10, 10, 30, 50, 70, 90],
@@ -60,9 +57,9 @@ legend.onAdd = function (map) {
 
     // loop through our density intervals and generate a label with a colored square for each interval
     for (var i = 0; i < grades.length; i++) {
-        div.innerHTML +=
-            '<i style="background:' + chooseColor(grades[i] + 1) + '"></i> ' +
-            grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+      div.innerHTML +=
+          '<i style="background:' + chooseColor(grades[i] + 1) + '"></i> ' +
+          grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
     }
 
     return div;
