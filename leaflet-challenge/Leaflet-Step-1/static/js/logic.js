@@ -47,6 +47,7 @@ function chooseColor(depth) {
   }
 }
 
+//add legend to map
 var legend = L.control({position: 'bottomright'});
 
 legend.onAdd = function (myMap) {
