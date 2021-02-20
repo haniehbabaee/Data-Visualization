@@ -24,6 +24,15 @@ var outdoormap = L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x
   accessToken: API_KEY
 });
 
+// Define a map object
+var myMap = L.map("map", {
+  center: [40.7608, -111.8910],
+  zoom: 5,
+  layers: [lightmap, outdoormap, satellitemap]
+});
+
+//lightmap.addTo(myMap)
+
 // Create a baseMaps object
 var baseMaps = {
   "Light": lightmap,
@@ -36,77 +45,85 @@ var queryUrl="https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week
 var tecUrl="https://raw.githubusercontent.com/fraxen/tectonicplates/master/GeoJSON/PB2002_boundaries.json"
 
 // Define arrays to hold created earthquake and tec markers
-var tecMarkers = [];
-var earthquakeMarkers = [];
+// var tecMarkers = [];
+// var earthquakeMarkers = [];
 
-d3.json(tecUrl, function(tecdata){
-  //console.log(tecdata)
-  tecdata.features.forEach(function(feature){
-    tecMarkers.push(L.polygon(feature.geometry.coordinates, {
-      color: "yellow"
-    }))
-  })
-})
-console.log(tecMarkers)
-
-d3.json(queryUrl, function(data){
-  //console.log(earthquakeMarkers)
-  data.features.forEach(function(record){
-    earthquakeMarkers.push(L.circle([record.geometry.coordinates[1], record.geometry.coordinates[0]], {
-      color:"black",
-      fillColor: chooseColor(record.geometry.coordinates[2]),
-      fillOpacity: 0.75,
-      weight: 0.5,
-      radius:(record.properties.mag)*10000
-    }).bindPopup("Place: " + record.properties.place + "<hr>Earthquake Magnitude: " +
-    record.properties.mag + "<br>Depth: "+record.geometry.coordinates[2]));
-  })
-})
-console.log(earthquakeMarkers)
-
-function chooseColor(depth) {
-  if (depth<=10){
-    return "#FEB24C"
-  }
-  else if (depth<=30){
-    return "#FD8D3C"
-  }
-  else if (depth<=50){
-    return "#FC4E2A"
-  }
-  else if (depth<=70){
-    return "#E31A1C"
-  }
-  else if (depth<=90){
-    return "#BD0026"
-  }
-}
-
-// Create two separate layer groups: one for cities and one for states
-var tectonicPlates = L.layerGroup(tecMarkers);
-var earthquakes = L.layerGroup(earthquakeMarkers);
-
-
+var tecMarkers = new L.LayerGroup();
+var earthquakeMarkers = new L.LayerGroup();
 
 // Create an overlay object
 var overlayMaps = {
-  "Tectonic Plates": tectonicPlates,
-  "Earthquakes": earthquakes
+  "Tectonic Plates": tecMarkers,
+  "Earthquakes": earthquakeMarkers
 };
 
-// Define a map object
-var myMap = L.map("map", {
-  center: [40.7608, -111.8910],
-  zoom: 5,
-  layers: [lightmap, earthquakes, tectonicPlates]
-});
-
-
-// Pass our map layers into our layer control
 // Add the layer control to the map
 L.control.layers(baseMaps, overlayMaps, {
   collapsed: false
 }).addTo(myMap);
+
+// console.log(tecMarkers)
+
+
+
+d3.json(queryUrl, function(data){
+
+  function getStyle (feature) {
+    return {
+      fillColor: chooseColor(feature.geometry.coordinates[2]),
+      radius: (feature.properties.mag)*3,
+      color:"red",
+      weight: 0.5,
+      fillOpacity: 0.75
+    } 
+  }
+
+  function chooseColor(depth) {
+    if (depth<=10){
+      return "#FEB24C"
+    }
+    else if (depth<=30){
+      return "#FD8D3C"
+    }
+    else if (depth<=50){
+      return "#FC4E2A"
+    }
+    else if (depth<=70){
+      return "#E31A1C"
+    }
+    else if (depth<=90){
+      return "#BD0026"
+    }
+  }
+
+  L.geoJson(data, {
+    pointToLayer: function(feature, latlng) {
+      return L.circleMarker(latlng)
+    },
+    onEachFeature: function (feature, layer) {
+      layer.bindPopup ("Place: " + feature.properties.place + "<hr>Earthquake Magnitude: " +
+      feature.properties.mag + "<br>Depth: "+feature.geometry.coordinates[2])
+    },
+    style: getStyle
+ 
+}).addTo(earthquakeMarkers)
+
+earthquakeMarkers.addTo(myMap)
+console.log(earthquakeMarkers)
+
+
+
+//tectonic plates
+d3.json(tecUrl, function(tecdata){
+  //console.log(tecdata)
+  L.geoJson(tecdata, {
+    color:"yellow",
+    weight: 3
+  }).addTo(tecMarkers)
+
+  tecMarkers.addTo(myMap)
+})
+
 
 //add legend to map
 var legend = L.control({position: 'bottomright'});
@@ -127,4 +144,6 @@ legend.onAdd = function (myMap) {
     return div;
 };
 
-legend.addTo(myMap);
+legend.addTo(myMap)
+
+});
