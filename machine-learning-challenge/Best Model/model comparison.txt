@@ -1,0 +1,6 @@
+1. Logistic Regression model score for training data was 78.86% and for testing data was 76.31% which is not good enough to predict exoplanet. Then by tuning the model using gridsearch and changing the parameters of "C", "penalty", "max_iter" and "solver", it resulted that these are the best values for parameters:'C': 1000, 'max_iter': 100, 'penalty': 'l1', 'solver': 'liblinear'.
+Final score of the model with the above chosen parameters is 80.94% which is not that good for predicting exoplanets.
+
+2. Another model that was created was RendomForest. The initial score of the testing data was 89.87% which is good enough to predict exoplanet. Then by tuning the model using gridsearch and changing the parameters of 'min_samples_split', 'n_estimators' and 'max_depth',it gives the best parameters and score. The first time that aproximately score of 89.9% is seen is where the parameters are as follow: 
+n_estimators=100, max_depth=6, min_samples_split=5
+Choosing above parameters and fit the model, the score for test data is 89.13% which is good enough for predicting exoplanet data.
